@@ -1,0 +1,79 @@
+package com.example.fitlifetech.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.fitlifetech.repository.RutinaRepository;
+import com.example.fitlifetech.model.Rutina;
+
+@Service
+public class RutinaService {
+
+        @Autowired
+        private RutinaRepository repo;
+        
+        public List<Rutina> obtenerRutinas(){
+                return repo.obtenerRutinas();
+        }
+
+        public List<Rutina> obtenerRutinasOrdenadas(String criterio) throws Exception{
+            try {
+                switch (criterio) {
+                        case ("id")             -> repo.obtenerRutinasOrdenadasPorId();
+                        case ("nombre")         -> repo.obtenerRutinasOrdenadasPorNombre();
+                        case ("nivel")          -> repo.obtenerRutinasOrdenadasPorNivel();
+                        case ("duracion")       -> repo.obtenerRutinasOrdenadasPorDuracion();
+                        case ("entrenador")     -> repo.obtenerRutinasOrdenadasPorEntrenador();
+                        default -> throw new Exception("criterio " + criterio + " no valido");
+                }   
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+            return null;
+        }
+
+        public List<Rutina> obtenerRutinasCortas(){
+                return repo.obtenerRutinasCortas();
+        }
+
+        public List<Rutina> obtenerRutinasLargas(){
+                return repo.obtenerRutinasLargas();
+        }
+
+        public List<Rutina> obtenerRutinasFaciles(){
+                return repo.obtenerRutinasFaciles();
+        }
+
+        public List<Rutina> obtenerRutinasDificiles(){
+                return repo.obtenerRutinasDificiles();
+        }
+
+        public <E> Rutina buscarPorIdentificador(String identificador,E element) throws Exception{
+                
+                try{
+                        switch (identificador){
+                        case ("id")     -> repo.buscarPorId((int)element);
+                        case("nombre")  -> repo.buscarPorNombre((String)element);
+                        default -> throw new Exception("identificador " + identificador + " invalido");
+                        }
+                }catch (ClassCastException e){
+                        System.out.println("Error: elemento " + e.getMessage());
+                }
+                return null;
+        }
+
+        public <E> List<Rutina> buscarPorCriterio(String criterio, E element) throws Exception{
+
+                try {
+                        switch (criterio) {
+                            case ("nivel")      -> repo.buscarPorNivel((int)element);
+                            case ("duracion")   -> repo.buscarPorDuracion((int)element);
+                            case ("tipo")       -> repo.buscarPorTipo((String)element);
+                            default             -> throw new Exception("criterio " + criterio + " invalido");
+                        }
+                } catch (Exception e) {
+                }
+        }
+}
