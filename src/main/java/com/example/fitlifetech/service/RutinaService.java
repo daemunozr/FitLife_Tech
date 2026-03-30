@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.fitlifetech.repository.RutinaRepository;
 import com.example.fitlifetech.model.Rutina;
+import com.example.fitlifetech.repository.RutinaRepository;
 
 @Service
 public class RutinaService {
@@ -71,9 +71,12 @@ public class RutinaService {
                             case ("nivel")      -> repo.buscarPorNivel((int)element);
                             case ("duracion")   -> repo.buscarPorDuracion((int)element);
                             case ("tipo")       -> repo.buscarPorTipo((String)element);
+                            case ("entrenador") -> repo.buscarPorEntrenador((String)element);
                             default             -> throw new Exception("criterio " + criterio + " invalido");
                         }
-                } catch (Exception e) {
+                } catch (ClassCastException e) {
+                        System.out.println("Error: elemento " + e.getMessage());
                 }
+                return null;
         }
 }

@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 import com.example.fitlifetech.model.Rutina;
-import com.example.fitlifetech.model.TipoRutina;
 
 import lombok.NoArgsConstructor;;
 
