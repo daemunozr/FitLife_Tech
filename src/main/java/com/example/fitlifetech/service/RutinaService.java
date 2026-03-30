@@ -79,4 +79,27 @@ public class RutinaService {
                 }
                 return null;
         }
+
+        public Rutina actualizarRutina(Rutina rutina) throws Exception{
+                if(repo.actualizar(rutina) == null)
+                        throw new Exception("Error: rutina no encontrada para actualizar");
+
+                return rutina;
+        }
+
+        public String borrarRutina(int id) throws Exception{
+                if(repo.buscarPorId(id) == null)
+                        throw new Exception("Error: rutina no encontrada para actualizar");
+
+                repo.eliminar(id);
+                return "Rutina eliminada";
+        }
+
+        public String borrarRutina(String nombre) throws Exception{
+                if(repo.buscarPorNombre(nombre) == null)
+                        throw new Exception("Error: rutina no encontrada para actualizar");
+
+                repo.eliminar(nombre);
+                return "Rutina eliminada";
+        }
 }

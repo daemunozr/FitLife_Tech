@@ -147,5 +147,11 @@ public class RutinaRepository {
                 if(tmp_rutina != null)
                         rutinas.remove(tmp_rutina);
         }
+
+        public void eliminar(String nombre){
+                Rutina tmp_rutina = buscarPorNombre(nombre);
+                if(tmp_rutina != null)
+                        rutinas.remove(tmp_rutina);
+        }
         
 }
