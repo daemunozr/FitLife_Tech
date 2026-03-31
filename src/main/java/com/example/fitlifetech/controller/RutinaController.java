@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fitlifetech.model.Rutina;
 import com.example.fitlifetech.service.RutinaService;
-
-
-
 
 @RestController
 @RequestMapping("/api/v1/rutinas")
@@ -46,10 +42,18 @@ public class RutinaController {
         return null;
     }
 
-    @GetMapping("/buscar/{criterio_unico}")
-    public Rurina buscarRutinaUnicaPorCriterio(@PathVariable("criterio_unico") String criterio_unico) {
-        //TODO
+    
+    @GetMapping("/filtrar/id")
+    public Rutina buscarRutinaUnicaPorId(@RequestParam(value= "llave") int id) {
+        try {
+            return service.buscarPorId(id);    
+        } catch (Exception e) {
+            System.out.println("Error: "+ e.getMessage());
+        }
+        return null;
     }
+    
+    
     
 
     @PostMapping

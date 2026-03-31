@@ -1,0 +1,8 @@
+{
+    "id": 100,
+    "nombre": "rutina destructora",
+    "nivel": 5,
+    "duracion_minutos": 120,
+    "tipo": "anaerobico",
+    "entrenador": "El Maldito"
+}

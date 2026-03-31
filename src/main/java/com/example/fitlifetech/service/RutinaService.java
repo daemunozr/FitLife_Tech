@@ -68,29 +68,29 @@ public class RutinaService {
                 return tmp_rutina;
         }
 
-        public List<Rutina> buscarPorNivel(int nivel) throws Exception{
-                List<Rutina> tmp_rutinas = repo.buscarPorNivel(nivel);
+        public List<Rutina> filtrarPorNivel(int nivel) throws Exception{
+                List<Rutina> tmp_rutinas = repo.filtrarPorNivel(nivel);
                 if(tmp_rutinas == null)
                         throw new Exception("Error: rutina no encontrada por nivel " + nivel);
                 return tmp_rutinas;
         }
 
-        public List<Rutina> buscarPorDuracion(int duracion) throws Exception{
-                List<Rutina> tmp_rutinas = repo.buscarPorDuracion(duracion);
+        public List<Rutina> filtrarPorDuracion(int duracion) throws Exception{
+                List<Rutina> tmp_rutinas = repo.filtrarPorDuracion(duracion);
                 if(tmp_rutinas == null)
                         throw new Exception("Error: rutina no encontrada por duracion " + duracion);
                 return tmp_rutinas;
         }
 
-        public List<Rutina> buscarPorTipo(String tipo) throws Exception{
-                List<Rutina> tmp_rutinas = repo.buscarPorTipo(tipo);
+        public List<Rutina> filtrarPorTipo(String tipo) throws Exception{
+                List<Rutina> tmp_rutinas = repo.filtrarPorTipo(tipo);
                 if(tmp_rutinas == null)
                         throw new Exception("Error: rutina no encontrada por tipo " + tipo);
                 return tmp_rutinas;
         }
 
-        public List<Rutina> buscarPorEtrenador(String entrenador) throws Exception{
-                List<Rutina> tmp_rutinas = repo.buscarPorEntrenador(entrenador);
+        public List<Rutina> filtrarPorEtrenador(String entrenador) throws Exception{
+                List<Rutina> tmp_rutinas = repo.filtrarPorEntrenador(entrenador);
                 if(tmp_rutinas == null)
                         throw new Exception("Error: rutina no encontrada por entrenador " + entrenador);
                 return tmp_rutinas;

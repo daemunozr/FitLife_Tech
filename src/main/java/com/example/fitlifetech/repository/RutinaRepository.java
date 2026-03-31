@@ -21,6 +21,46 @@ public class RutinaRepository {
                 return rutinas;
         }
 
+        public Rutina buscarPorId(int id){
+                for(Rutina rutina: rutinas){
+                        if(rutina.getId() == id)
+                                return rutina;
+                }
+                return null;
+        }
+
+        public Rutina buscarPorNombre(String nombre){
+                for(Rutina rutina: rutinas){
+                        if(rutina.getNombre().equals(nombre))
+                                return rutina;
+                }
+                return null;
+        }
+
+        public List<Rutina> filtrarPorNivel(int nivel){
+                return rutinas.
+                        stream().filter(rutina -> rutina.getNivel() == nivel)
+                        .collect(Collectors.toList());
+        }
+
+        public List<Rutina> filtrarPorDuracion(int duracion_minutos){
+                return rutinas.
+                        stream().filter(rutina -> rutina.getDuracion_minutos() == duracion_minutos)
+                        .collect(Collectors.toList());
+        }
+
+        public List<Rutina> filtrarPorTipo(String tipo){
+                return rutinas.
+                        stream().filter(rutina -> rutina.getTipo().equals(tipo))
+                        .collect(Collectors.toList());
+        }
+
+        public List<Rutina> filtrarPorEntrenador(String entrenaador){
+                return rutinas.
+                        stream().filter(rutina -> rutina.getEntrenador().equals(entrenaador))
+                        .collect(Collectors.toList());
+        }
+        
         public List<Rutina> obtenerRutinasCortas(){
                 int duracion = Integer.MAX_VALUE;
                 for(Rutina rutina: rutinas){
@@ -28,7 +68,7 @@ public class RutinaRepository {
                                 duracion = rutina.getDuracion_minutos();
                         }
                 }
-                return buscarPorDuracion(duracion);
+                return filtrarPorDuracion(duracion);
         }
 
         public List<Rutina> obtenerRutinasLargas(){
@@ -38,7 +78,7 @@ public class RutinaRepository {
                                 duracion = rutina.getDuracion_minutos();
                         }
                 }
-                return buscarPorDuracion(duracion);
+                return filtrarPorDuracion(duracion);
         }
 
         public List<Rutina> obtenerRutinasFaciles(){
@@ -47,7 +87,7 @@ public class RutinaRepository {
                         if(rutina.getNivel() < nivel)
                                 nivel = rutina.getNivel();
                 }
-                return buscarPorNivel(nivel);
+                return filtrarPorNivel(nivel);
         }
 
         public List<Rutina> obtenerRutinasDificiles(){
@@ -56,7 +96,7 @@ public class RutinaRepository {
                         if(rutina.getNivel() > nivel)
                                 nivel = rutina.getNivel();
                 }
-                return buscarPorNivel(nivel);
+                return filtrarPorNivel(nivel);
         }
 
         public List<Rutina> obtenerRutinasOrdenadasPorId(){
@@ -89,45 +129,7 @@ public class RutinaRepository {
                 return tmp_rutinas;
         }
 
-        public Rutina buscarPorId(int id){
-                for(Rutina rutina: rutinas){
-                        if(rutina.getId() == id)
-                                return rutina;
-                }
-                return null;
-        }
-
-        public Rutina buscarPorNombre(String nombre){
-                for(Rutina rutina: rutinas){
-                        if(rutina.getNombre().equals(nombre))
-                                return rutina;
-                }
-                return null;
-        }
-
-        public List<Rutina> buscarPorNivel(int nivel){
-                return rutinas.
-                        stream().filter(rutina -> rutina.getNivel() == nivel)
-                        .collect(Collectors.toList());
-        }
-
-        public List<Rutina> buscarPorDuracion(int duracion_minutos){
-                return rutinas.
-                        stream().filter(rutina -> rutina.getDuracion_minutos() == duracion_minutos)
-                        .collect(Collectors.toList());
-        }
-
-        public List<Rutina> buscarPorTipo(String tipo){
-                return rutinas.
-                        stream().filter(rutina -> rutina.getTipo().equals(tipo))
-                        .collect(Collectors.toList());
-        }
-
-        public List<Rutina> buscarPorEntrenador(String entrenaador){
-                return rutinas.
-                        stream().filter(rutina -> rutina.getEntrenador().equals(entrenaador))
-                        .collect(Collectors.toList());
-        }
+        
 
         public Rutina guardar(Rutina rutina){
                 if(buscarPorId(rutina.getId()) == null){
