@@ -27,5 +27,5 @@ public class Rutina {
         private String tipo;
 
         @NotBlank(message="Rutina sin entrenador")
-        private String personal_trainer;
+        private String entrenador;
 }

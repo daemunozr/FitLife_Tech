@@ -103,6 +103,10 @@ public class RutinaService {
                 return rutina;
         }
 
+        public Rutina guardarRutina(Rutina rutina){
+                return repo.guardar(rutina);
+        }
+
         public String borrarRutina(int id) throws Exception{
                 if(repo.buscarPorId(id) == null)
                         throw new Exception("Error: rutina con id " + id + " no encontrada para borrar");

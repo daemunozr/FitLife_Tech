@@ -85,7 +85,7 @@ public class RutinaRepository {
 
         public List<Rutina> obtenerRutinasOrdenadasPorEntrenador(){
                 List<Rutina> tmp_rutinas = new ArrayList<>(rutinas);
-                tmp_rutinas.sort(Comparator.comparing(Rutina::getPersonal_trainer));
+                tmp_rutinas.sort(Comparator.comparing(Rutina::getEntrenador));
                 return tmp_rutinas;
         }
 
@@ -125,8 +125,16 @@ public class RutinaRepository {
 
         public List<Rutina> buscarPorEntrenador(String entrenaador){
                 return rutinas.
-                        stream().filter(rutina -> rutina.getPersonal_trainer().equals(entrenaador))
+                        stream().filter(rutina -> rutina.getEntrenador().equals(entrenaador))
                         .collect(Collectors.toList());
+        }
+
+        public Rutina guardar(Rutina rutina){
+                if(buscarPorId(rutina.getId()) == null){
+                        rutinas.add(rutina);
+                        return rutina;
+                }
+                return null;
         }
 
         public Rutina actualizar(Rutina rutina){
