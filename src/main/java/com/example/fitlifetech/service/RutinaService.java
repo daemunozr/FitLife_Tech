@@ -89,7 +89,7 @@ public class RutinaService {
                 return tmp_rutinas;
         }
 
-        public List<Rutina> filtrarPorEtrenador(String entrenador) throws Exception{
+        public List<Rutina> filtrarPorEntrenador(String entrenador) throws Exception{
                 List<Rutina> tmp_rutinas = repo.filtrarPorEntrenador(entrenador);
                 if(tmp_rutinas == null)
                         throw new Exception("Error: rutina no encontrada por entrenador " + entrenador);

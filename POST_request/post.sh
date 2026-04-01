@@ -1,6 +1,6 @@
 #!/bin/bash
 
-url='http://localhost:8080/api/v1/libros'
+url='http://localhost:8080/api/v1/rutinas'
 
 curl -v $url --json @rutina_1.json && echo
 curl -v $url --json @rutina_2.json && echo
