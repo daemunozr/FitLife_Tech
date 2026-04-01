@@ -54,7 +54,6 @@ public class RutinaController {
             default:
                 return ResponseEntity.badRequest().body("Error: el criterio \"" + criterio + "\" no es valido");
         }
-        //return ResponseEntity.badRequest().body("Error: query no soportado");
     }
     
     @GetMapping("/buscarId")
