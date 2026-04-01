@@ -57,68 +57,67 @@ public class RutinaService {
         public Rutina buscarPorId(int id) throws Exception{
                 Rutina tmp_rutina = repo.buscarPorId(id); 
                 if(tmp_rutina == null)
-                        throw new Exception("Error: rutina no encontrada por id " + id);
+                        throw new Exception("Error: rutina no encontrada por id \"" + id + "\"");
                 return tmp_rutina;
         }
 
         public Rutina buscarPorNombre(String nombre) throws Exception{
                 Rutina tmp_rutina = repo.buscarPorNombre(nombre);
                 if(tmp_rutina == null)
-                        throw new Exception("Error: rutina no encontrada por nombre " + nombre);
+                        throw new Exception("Error: rutina no encontrada por nombre \"" + nombre + "\"");
                 return tmp_rutina;
         }
 
         public List<Rutina> filtrarPorNivel(int nivel) throws Exception{
                 List<Rutina> tmp_rutinas = repo.filtrarPorNivel(nivel);
                 if(tmp_rutinas == null)
-                        throw new Exception("Error: rutina no encontrada por nivel " + nivel);
+                        throw new Exception("Error: rutina no encontrada por nivel \"" + nivel + "\"");
                 return tmp_rutinas;
         }
 
         public List<Rutina> filtrarPorDuracion(int duracion) throws Exception{
                 List<Rutina> tmp_rutinas = repo.filtrarPorDuracion(duracion);
                 if(tmp_rutinas == null)
-                        throw new Exception("Error: rutina no encontrada por duracion " + duracion);
+                        throw new Exception("Error: rutina no encontrada por duracion \"" + duracion + "\"");
                 return tmp_rutinas;
         }
 
         public List<Rutina> filtrarPorTipo(String tipo) throws Exception{
                 List<Rutina> tmp_rutinas = repo.filtrarPorTipo(tipo);
                 if(tmp_rutinas == null)
-                        throw new Exception("Error: rutina no encontrada por tipo " + tipo);
+                        throw new Exception("Error: rutina no encontrada por tipo \"" + tipo + "\"");
                 return tmp_rutinas;
         }
 
         public List<Rutina> filtrarPorEntrenador(String entrenador) throws Exception{
                 List<Rutina> tmp_rutinas = repo.filtrarPorEntrenador(entrenador);
                 if(tmp_rutinas == null)
-                        throw new Exception("Error: rutina no encontrada por entrenador " + entrenador);
+                        throw new Exception("Error: rutina no encontrada por entrenador \"" + entrenador + "\"");
                 return tmp_rutinas;
         }
 
         public Rutina actualizarRutina(Rutina rutina) throws Exception{
                 if(repo.actualizar(rutina) == null)
-                        throw new Exception("Error: rutina " + rutina.getNombre() + " con id " + rutina.getId() + " no encontrada para actualizar");
-
+                        throw new Exception("Error: rutina con id \"" + rutina.getId() + "\" no encontrada para actualizar");
                 return rutina;
         }
 
-        public Rutina guardarRutina(Rutina rutina){
-                return repo.guardar(rutina);
+        public Rutina guardarRutina(Rutina rutina) throws Exception{
+                if(repo.guardar(rutina) == null)
+                        throw new Exception("Error: rutina con id \"" + rutina.getId() + "\" ya se encuentra guardada");
+                return rutina;
         }
 
         public String borrarRutina(int id) throws Exception{
                 if(repo.buscarPorId(id) == null)
-                        throw new Exception("Error: rutina con id " + id + " no encontrada para borrar");
-
+                        throw new Exception("Error: rutina con id \"" + id + "\" no encontrada para borrar");
                 repo.eliminar(id);
                 return "Rutina eliminada";
         }
 
         public String borrarRutina(String nombre) throws Exception{
                 if(repo.buscarPorNombre(nombre) == null)
-                        throw new Exception("Error: rutina con nombre " + nombre + " no encontrada para borrar");
-
+                        throw new Exception("Error: rutina con nombre \"" + nombre + "\" no encontrada para borrar");
                 repo.eliminar(nombre);
                 return "Rutina eliminada";
         }

@@ -1,9 +1,16 @@
 package com.example.fitlifetech.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,11 +18,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fitlifetech.model.Rutina;
 import com.example.fitlifetech.service.RutinaService;
 
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/rutinas")
@@ -25,121 +34,132 @@ public class RutinaController {
     private RutinaService service;
 
     @GetMapping
-    public List<Rutina> listarRutinas(){
-        return service.obtenerRutinas();
+    public ResponseEntity<List<Rutina>> listarRutinas(){
+        return ResponseEntity.ok(service.obtenerRutinas());
     }
 
     @GetMapping("/orden")
-    public List<Rutina> listarRutinasOrdenadasPorCriterio(@RequestParam(value = "criterio", required=true) String criterio){
+    public ResponseEntity<?> listarRutinasOrdenadasPorCriterio(@RequestParam(value = "criterio", required=true) String criterio){
         switch (criterio){
             case("id"):
-                return service.obtenerRutinasOrdenadasPorId();
+                return ResponseEntity.ok(service.obtenerRutinasOrdenadasPorId());
             case("nombre"): 
-                return service.obtenerRutinasOrdenadasPorNombre();
+                return ResponseEntity.ok(service.obtenerRutinasOrdenadasPorNombre());
             case("nivel"):
-                return service.obtenerRutinasOrdenadasPorNivel();
+                return ResponseEntity.ok(service.obtenerRutinasOrdenadasPorNivel());
             case("duracion"):
-                return service.obtenerRutinasOrdenadasPorDuracion();
+                return ResponseEntity.ok(service.obtenerRutinasOrdenadasPorDuracion());
             case("entrenador"):
-                return service.obtenerRutinasOrdenadasPorEntrenador();
+                return ResponseEntity.ok(service.obtenerRutinasOrdenadasPorEntrenador());
+            default:
+                return ResponseEntity.badRequest().body("Error: el criterio \"" + criterio + "\" no es valido");
         }
-        return null;
+        //return ResponseEntity.badRequest().body("Error: query no soportado");
     }
     
     @GetMapping("/buscarId")
-    public Rutina buscarRutinaPorId(@RequestParam(value= "llave", required=true) int id) {
+    public ResponseEntity<?> buscarRutinaPorId(@RequestParam(value= "llave", required=true) int id) {
         try {
-            return service.buscarPorId(id);    
+            return ResponseEntity.ok(service.buscarPorId(id));    
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        return null;
     }
 
     @GetMapping("/buscarNombre")
-    public Rutina buscarRutinaPorNombre(@RequestParam(value= "nombre", required=true) String nombre) {
+    public ResponseEntity<?> buscarRutinaPorNombre(@RequestParam(value= "nombre", required=true) String nombre) {
         try {
-            return service.buscarPorNombre(nombre);    
+            return ResponseEntity.ok(service.buscarPorNombre(nombre));    
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        return null;
     }
     
     @GetMapping("/filtrarNivel")
-    public List<Rutina> filtrarRutinaPorNivel(@RequestParam(value= "valor", required=true) int nivel) {
+    public ResponseEntity<?> filtrarRutinaPorNivel(@RequestParam(value= "valor", required=true) int nivel) {
         try {
-            return service.filtrarPorNivel(nivel);    
+            return ResponseEntity.ok(service.filtrarPorNivel(nivel));    
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        return null;
     }
 
     @GetMapping("/filtrarDuracion")
-    public List<Rutina> filtrarRutinaPorDuracion(@RequestParam(value= "duracion", required=true) int duracion) {
+    public ResponseEntity<?> filtrarRutinaPorDuracion(@RequestParam(value= "duracion", required=true) int duracion) {
         try {
-            return service.filtrarPorDuracion(duracion);    
+            return ResponseEntity.ok(service.filtrarPorDuracion(duracion));    
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        return null;
     }
 
     @GetMapping("/filtrarTipo")
-    public List<Rutina> filtrarRutinaPorTipo(@RequestParam(value= "tipo", required=true) String tipo) {
+    public ResponseEntity<?> filtrarRutinaPorTipo(@RequestParam(value= "tipo", required=true) String tipo) {
         try {
-            return service.filtrarPorTipo(tipo);    
+            return ResponseEntity.ok(service.filtrarPorTipo(tipo));    
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        return null;
     }
 
     @GetMapping("/filtrarEntrenador")
-    public List<Rutina> filtrarRutinaPorEntrenador(@RequestParam(value= "nombre", required=true) String entrenador) {
+    public ResponseEntity<?> filtrarRutinaPorEntrenador(@RequestParam(value= "nombre", required=true) String entrenador) {
         try {
-            return service.filtrarPorTipo(entrenador);    
+            return ResponseEntity.ok(service.filtrarPorTipo(entrenador));    
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        return null;
     }
     
     @PostMapping
-    public Rutina guardarRutina(@RequestBody Rutina rutina) {
-        service.guardarRutina(rutina);
-        return rutina;
+    public ResponseEntity<?> guardarRutina(@Valid @RequestBody Rutina rutina) {
+        try {
+            service.guardarRutina(rutina);
+            return ResponseEntity.status(HttpStatus.CREATED).body(rutina);    
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        
     }
 
     @PutMapping
-    public Rutina actualizarRutina(@RequestBody Rutina rutina) {
+    public ResponseEntity<?> actualizarRutina(@Valid @RequestBody Rutina rutina) {
         
         try {
             service.actualizarRutina(rutina);
-            return rutina;
+            return ResponseEntity.ok(rutina);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return null;
     }
 
     @DeleteMapping("/borrarId/{id}")
-    public String borrarRutinaPorId(@PathVariable int id){
+    public ResponseEntity<?> borrarRutinaPorId(@PathVariable int id){
         try {
-            return service.borrarRutina(id);
+            String ok_msg = service.borrarRutina(id);
+            return ResponseEntity.ok(ok_msg);
         } catch (Exception e) {
-            return e.getMessage();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @DeleteMapping("/borrarNombre/{nombre}")
-    public String borrarRutinaPorNombre(@PathVariable String nombre){
+    public ResponseEntity<?> borrarRutinaPorNombre(@PathVariable String nombre){
         try {
-            return service.borrarRutina(nombre);
+            String ok_msg = service.borrarRutina(nombre);
+            return ResponseEntity.ok(ok_msg);
         } catch (Exception e) {
-            return e.getMessage();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> manejarErroresValidacion(MethodArgumentNotValidException ex) {
+        Map<String, String> errores = new HashMap<>();
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+            errores.put(error.getField(), error.getDefaultMessage());
+        }
+        return errores;
+    }
 }
